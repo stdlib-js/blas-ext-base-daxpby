@@ -53,38 +53,32 @@ This API is complementary to the package [`@stdlib/blas-base/daxpy`][@stdlib/bla
 
 <!-- /.intro -->
 
+<section class="installation">
 
+## Installation
+
+```bash
+npm install @stdlib/blas-ext-base-daxpby
+```
+
+Alternatively,
+
+-   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
+-   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
+-   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
+
+The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
+
+To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
+
+</section>
 
 <section class="usage">
 
 ## Usage
 
-To use in Observable,
-
 ```javascript
-daxpby = require( 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-daxpby@umd/browser.js' )
-```
-
-To vendor stdlib functionality and avoid installing dependency trees for Node.js, you can use the UMD server build:
-
-```javascript
-var daxpby = require( 'path/to/vendor/umd/blas-ext-base-daxpby/index.js' )
-```
-
-To include the bundle in a webpage,
-
-```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-daxpby@umd/browser.js"></script>
-```
-
-If no recognized module system is present, access bundle contents via the global scope:
-
-```html
-<script type="text/javascript">
-(function () {
-    window.daxpby;
-})();
-</script>
+var daxpby = require( '@stdlib/blas-ext-base-daxpby' );
 ```
 
 #### daxpby( N, alpha, x, strideX, beta, y, strideY )
@@ -191,32 +185,21 @@ daxpby.ndarray( 3, 5.0, x, 1, x.length-3, 2.0, y, 1, y.length-3 );
 
 <!-- eslint no-undef: "error" -->
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<body>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/random-array-discrete-uniform@umd/browser.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-daxpby@umd/browser.js"></script>
-<script type="text/javascript">
-(function () {
+```javascript
+var discreteUniform = require( '@stdlib/random-array-discrete-uniform' );
+var daxpby = require( '@stdlib/blas-ext-base-daxpby' );
 
-var x = discreteUniform( 10, -100, 100, {
+var opts = {
     'dtype': 'float64'
-});
+};
+var x = discreteUniform( 10, -100, 100, opts );
 console.log( x );
 
-var y = discreteUniform( 10, -100, 100, {
-    'dtype': 'float64'
-});
+var y = discreteUniform( 10, -100, 100, opts );
 console.log( y );
 
 daxpby( x.length, 5.0, x, 1, 2.0, y, 1 );
 console.log( y );
-
-})();
-</script>
-</body>
-</html>
 ```
 
 </section>
@@ -225,7 +208,129 @@ console.log( y );
 
 <!-- C interface documentation. -->
 
+* * *
 
+<section class="c">
+
+## C APIs
+
+<section class="intro">
+
+</section>
+
+<!-- /.intro -->
+
+<section class="usage">
+
+### Usage
+
+```c
+#include "stdlib/blas/ext/base/daxpby.h"
+```
+
+#### stdlib_strided_daxpby( N, alpha, \*X, strideX, beta, \*Y, strideY )
+
+Multiplies a double-precision floating-point strided array `x` by a constant and adds the result to a double-precision floating-point strided array `y` multiplied by a constant.
+
+```c
+const double x[] = { 1.0, 2.0, 3.0, 4.0 };
+double y[] = { 2.0, 3.0, 4.0, 5.0 };
+
+stdlib_strided_daxpby( 4, 5.0, x, 1, 2.0, y, 1 );
+```
+
+The function accepts the following arguments:
+
+-   **N**: `[in] CBLAS_INT` number of indexed elements.
+-   **alpha**: `[in] double` first scalar constant.
+-   **X**: `[in] double*` input array.
+-   **strideX**: `[in] CBLAS_INT` stride length for `X`.
+-   **beta**: `[in] double` second scalar constant.
+-   **Y**: `[inout] double*` output array.
+-   **strideY**: `[in] CBLAS_INT` stride length for `Y`.
+
+```c
+void stdlib_strided_daxpby( const CBLAS_INT N, const double alpha, const double *X, const CBLAS_INT strideX, const double beta, double *Y, const CBLAS_INT strideY );
+```
+
+<!--lint disable maximum-heading-length-->
+
+#### stdlib_strided_daxpby_ndarray( N, alpha, \*X, strideX, offsetX, beta, \*Y, strideY, offsetY )
+
+<!--lint enable maximum-heading-length-->
+
+Multiplies a double-precision floating-point strided array `x` by a constant and adds the result to a double-precision floating-point strided array `y` multiplied by a constant using alternative indexing semantics.
+
+```c
+const double x[] = { 1.0, 2.0, 3.0, 4.0 };
+double y[] = { 2.0, 3.0, 4.0, 5.0 };
+
+stdlib_strided_daxpby_ndarray( 4, 5.0, x, 1, 0, 2.0, y, 1, 0 );
+```
+
+The function accepts the following arguments:
+
+-   **N**: `[in] CBLAS_INT` number of indexed elements.
+-   **alpha**: `[in] double` first scalar constant.
+-   **X**: `[in] double*` input array.
+-   **strideX**: `[in] CBLAS_INT` stride length for `X`.
+-   **offsetX**: `[in] CBLAS_INT` starting index for `X`.
+-   **beta**: `[in] double` second scalar constant.
+-   **Y**: `[inout] double*` output array.
+-   **strideY**: `[in] CBLAS_INT` stride length for `Y`.
+-   **offsetY**: `[in] CBLAS_INT` starting index for `Y`.
+
+```c
+void stdlib_strided_daxpby_ndarray( const CBLAS_INT N, const double alpha, const double *X, const CBLAS_INT strideX, const CBLAS_INT offsetX, const double beta, double *Y, const CBLAS_INT strideY, const CBLAS_INT offsetY );
+```
+
+</section>
+
+<!-- /.usage -->
+
+<section class="notes">
+
+</section>
+
+<!-- /.notes -->
+
+<section class="examples">
+
+### Examples
+
+```c
+#include "stdlib/blas/ext/base/daxpby.h"
+#include <stdio.h>
+
+int main( void ) {
+    // Create strided arrays:
+    const double x[] = { 1.0, -2.0, 3.0, -4.0, 5.0, -6.0, 7.0, -8.0 };
+    double y[] = { 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0 };
+
+    // Specify the number of indexed elements:
+    const int N = 8;
+
+    // Specify strides:
+    const int strideX = 1;
+    const int strideY = 1;
+
+    // Multiply `x` by a constant and add to `y` multiplied by a constant:
+    stdlib_strided_daxpby( N, 5.0, x, strideX, 2.0, y, strideY );
+
+    // Print the result:
+    for ( int i = 0; i < 8; i++ ) {
+        printf( "y[ %i ] = %lf\n", i, y[ i ] );
+    }
+}
+```
+
+</section>
+
+<!-- /.examples -->
+
+</section>
+
+<!-- /.c -->
 
 <!-- Section for related `stdlib` packages. Do not manually edit this section, as it is automatically populated. -->
 
@@ -309,9 +414,9 @@ Copyright &copy; 2016-2026. The Stdlib [Authors][stdlib-authors].
 
 [mdn-typed-array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
 
-[@stdlib/array/float64]: https://github.com/stdlib-js/array-float64/tree/umd
+[@stdlib/array/float64]: https://github.com/stdlib-js/array-float64
 
-[@stdlib/blas/base/daxpy]: https://github.com/stdlib-js/blas-base-daxpy/tree/umd
+[@stdlib/blas/base/daxpy]: https://github.com/stdlib-js/blas-base-daxpy
 
 <!-- <related-links> -->
 
