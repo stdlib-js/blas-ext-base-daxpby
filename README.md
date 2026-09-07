@@ -53,14 +53,32 @@ This API is complementary to the package [`@stdlib/blas-base/daxpy`][@stdlib/bla
 
 <!-- /.intro -->
 
+<section class="installation">
 
+## Installation
+
+```bash
+npm install @stdlib/blas-ext-base-daxpby
+```
+
+Alternatively,
+
+-   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
+-   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
+-   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
+
+The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
+
+To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
+
+</section>
 
 <section class="usage">
 
 ## Usage
 
 ```javascript
-import daxpby from 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-daxpby@deno/mod.js';
+var daxpby = require( '@stdlib/blas-ext-base-daxpby' );
 ```
 
 #### daxpby( N, alpha, x, strideX, beta, y, strideY )
@@ -68,7 +86,7 @@ import daxpby from 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-daxpby@d
 Multiplies a double-precision floating-point strided array `x` by a constant and adds the result to a double-precision floating-point strided array `y` multiplied by a constant.
 
 ```javascript
-import Float64Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float64@deno/mod.js';
+var Float64Array = require( '@stdlib/array-float64' );
 
 var x = new Float64Array( [ 1.0, 2.0, 3.0, 4.0, 5.0 ] );
 var y = new Float64Array( [ 2.0, 3.0, 4.0, 5.0, 6.0 ] );
@@ -90,7 +108,7 @@ The function has the following parameters:
 The `N` and stride parameters determine which elements in the strided arrays are accessed at runtime. For example, to multiply every other element of `x` by `alpha` and add to every other element of `y` multiplied by `beta`:
 
 ```javascript
-import Float64Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float64@deno/mod.js';
+var Float64Array = require( '@stdlib/array-float64' );
 
 var x = new Float64Array( [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 ] );
 var y = new Float64Array( [ 7.0, 8.0, 9.0, 10.0, 11.0, 12.0 ] );
@@ -102,7 +120,7 @@ daxpby( 3, 5.0, x, 2, 2.0, y, 2 );
 Note that indexing is relative to the first index. To introduce an offset, use [`typed array`][mdn-typed-array] views.
 
 ```javascript
-import Float64Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float64@deno/mod.js';
+var Float64Array = require( '@stdlib/array-float64' );
 
 // Initial arrays...
 var x0 = new Float64Array( [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 ] );
@@ -121,7 +139,7 @@ daxpby( 3, 5.0, x1, 1, 2.0, y1, 1 );
 Multiplies a double-precision floating-point strided array `x` by a constant and adds the result to a double-precision floating-point strided array `y` multiplied by a constant using alternative indexing semantics.
 
 ```javascript
-import Float64Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float64@deno/mod.js';
+var Float64Array = require( '@stdlib/array-float64' );
 
 var x = new Float64Array( [ 1.0, 2.0, 3.0, 4.0, 5.0 ] );
 var y = new Float64Array( [ 2.0, 3.0, 4.0, 5.0, 6.0 ] );
@@ -138,7 +156,7 @@ The function has the following additional parameters:
 While [`typed array`][mdn-typed-array] views mandate a view offset based on the underlying buffer, the offset parameters support indexing semantics based on starting indices. For example, to multiply the last three elements of `x` by `alpha` and add to the last three elements of `y` multiplied by `beta`:
 
 ```javascript
-import Float64Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float64@deno/mod.js';
+var Float64Array = require( '@stdlib/array-float64' );
 
 var x = new Float64Array( [ 1.0, 2.0, 3.0, 4.0, 5.0 ] );
 var y = new Float64Array( [ 6.0, 7.0, 8.0, 9.0, 10.0 ] );
@@ -168,8 +186,8 @@ daxpby.ndarray( 3, 5.0, x, 1, x.length-3, 2.0, y, 1, y.length-3 );
 <!-- eslint no-undef: "error" -->
 
 ```javascript
-import discreteUniform from 'https://cdn.jsdelivr.net/gh/stdlib-js/random-array-discrete-uniform@deno/mod.js';
-import daxpby from 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-daxpby@deno/mod.js';
+var discreteUniform = require( '@stdlib/random-array-discrete-uniform' );
+var daxpby = require( '@stdlib/blas-ext-base-daxpby' );
 
 var opts = {
     'dtype': 'float64'
@@ -190,7 +208,129 @@ console.log( y );
 
 <!-- C interface documentation. -->
 
+* * *
 
+<section class="c">
+
+## C APIs
+
+<section class="intro">
+
+</section>
+
+<!-- /.intro -->
+
+<section class="usage">
+
+### Usage
+
+```c
+#include "stdlib/blas/ext/base/daxpby.h"
+```
+
+#### stdlib_strided_daxpby( N, alpha, \*X, strideX, beta, \*Y, strideY )
+
+Multiplies a double-precision floating-point strided array `x` by a constant and adds the result to a double-precision floating-point strided array `y` multiplied by a constant.
+
+```c
+const double x[] = { 1.0, 2.0, 3.0, 4.0 };
+double y[] = { 2.0, 3.0, 4.0, 5.0 };
+
+stdlib_strided_daxpby( 4, 5.0, x, 1, 2.0, y, 1 );
+```
+
+The function accepts the following arguments:
+
+-   **N**: `[in] CBLAS_INT` number of indexed elements.
+-   **alpha**: `[in] double` first scalar constant.
+-   **X**: `[in] double*` input array.
+-   **strideX**: `[in] CBLAS_INT` stride length for `X`.
+-   **beta**: `[in] double` second scalar constant.
+-   **Y**: `[inout] double*` output array.
+-   **strideY**: `[in] CBLAS_INT` stride length for `Y`.
+
+```c
+void stdlib_strided_daxpby( const CBLAS_INT N, const double alpha, const double *X, const CBLAS_INT strideX, const double beta, double *Y, const CBLAS_INT strideY );
+```
+
+<!--lint disable maximum-heading-length-->
+
+#### stdlib_strided_daxpby_ndarray( N, alpha, \*X, strideX, offsetX, beta, \*Y, strideY, offsetY )
+
+<!--lint enable maximum-heading-length-->
+
+Multiplies a double-precision floating-point strided array `x` by a constant and adds the result to a double-precision floating-point strided array `y` multiplied by a constant using alternative indexing semantics.
+
+```c
+const double x[] = { 1.0, 2.0, 3.0, 4.0 };
+double y[] = { 2.0, 3.0, 4.0, 5.0 };
+
+stdlib_strided_daxpby_ndarray( 4, 5.0, x, 1, 0, 2.0, y, 1, 0 );
+```
+
+The function accepts the following arguments:
+
+-   **N**: `[in] CBLAS_INT` number of indexed elements.
+-   **alpha**: `[in] double` first scalar constant.
+-   **X**: `[in] double*` input array.
+-   **strideX**: `[in] CBLAS_INT` stride length for `X`.
+-   **offsetX**: `[in] CBLAS_INT` starting index for `X`.
+-   **beta**: `[in] double` second scalar constant.
+-   **Y**: `[inout] double*` output array.
+-   **strideY**: `[in] CBLAS_INT` stride length for `Y`.
+-   **offsetY**: `[in] CBLAS_INT` starting index for `Y`.
+
+```c
+void stdlib_strided_daxpby_ndarray( const CBLAS_INT N, const double alpha, const double *X, const CBLAS_INT strideX, const CBLAS_INT offsetX, const double beta, double *Y, const CBLAS_INT strideY, const CBLAS_INT offsetY );
+```
+
+</section>
+
+<!-- /.usage -->
+
+<section class="notes">
+
+</section>
+
+<!-- /.notes -->
+
+<section class="examples">
+
+### Examples
+
+```c
+#include "stdlib/blas/ext/base/daxpby.h"
+#include <stdio.h>
+
+int main( void ) {
+    // Create strided arrays:
+    const double x[] = { 1.0, -2.0, 3.0, -4.0, 5.0, -6.0, 7.0, -8.0 };
+    double y[] = { 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0 };
+
+    // Specify the number of indexed elements:
+    const int N = 8;
+
+    // Specify strides:
+    const int strideX = 1;
+    const int strideY = 1;
+
+    // Multiply `x` by a constant and add to `y` multiplied by a constant:
+    stdlib_strided_daxpby( N, 5.0, x, strideX, 2.0, y, strideY );
+
+    // Print the result:
+    for ( int i = 0; i < 8; i++ ) {
+        printf( "y[ %i ] = %lf\n", i, y[ i ] );
+    }
+}
+```
+
+</section>
+
+<!-- /.examples -->
+
+</section>
+
+<!-- /.c -->
 
 <!-- Section for related `stdlib` packages. Do not manually edit this section, as it is automatically populated. -->
 
@@ -209,7 +349,7 @@ console.log( y );
 
 ## Notice
 
-This package is part of [stdlib][stdlib], a standard library with an emphasis on numerical and scientific computing. The library provides a collection of robust, high performance libraries for mathematics, statistics, streams, utilities, and more.
+This package is part of [stdlib][stdlib], a standard library for JavaScript and Node.js, with an emphasis on numerical and scientific computing. The library provides a collection of robust, high performance libraries for mathematics, statistics, streams, utilities, and more.
 
 For more information on the project, filing bug reports and feature requests, and guidance on how to develop [stdlib][stdlib], see the main project [repository][stdlib].
 
@@ -274,9 +414,9 @@ Copyright &copy; 2016-2026. The Stdlib [Authors][stdlib-authors].
 
 [mdn-typed-array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
 
-[@stdlib/array/float64]: https://github.com/stdlib-js/array-float64/tree/deno
+[@stdlib/array/float64]: https://github.com/stdlib-js/array-float64
 
-[@stdlib/blas/base/daxpy]: https://github.com/stdlib-js/blas-base-daxpy/tree/deno
+[@stdlib/blas/base/daxpy]: https://github.com/stdlib-js/blas-base-daxpy
 
 <!-- <related-links> -->
 
